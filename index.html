@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Hassan — Senior Backend Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #06060a;
+            --surface: #0b0b13;
+            --surface2: #12121f;
+            --border: rgba(255,255,255,0.05);
+            --border2: rgba(124,107,255,0.2);
+            --text: #e2e2e9;
+            --muted: #787893;
+            --accent: #6366f1;
+            --accent2: #2dd4bf;
+            --accent3: #f43f5e;
+            --warm: #fb923c;
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        .grid-bg {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .noise {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .glow { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(140px); opacity: 0.06; }
+        .glow-1 { width: 600px; height: 600px; background: var(--accent); top: -150px; left: -100px; }
+        .glow-2 { width: 500px; height: 500px; background: var(--accent2); bottom: -100px; right: -50px; }
+        
+        nav { position: sticky; top: 0; z-index: 100; background: rgba(6,6,10,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 16px 0; }
+        .nav-inner { max-width: 1000px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 24px; }
+        .nav-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent2); }
+
+        main { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 40px 24px 100px; }
+        
+        .hero { padding: 60px 0; border-bottom: 1px solid var(--border); }
+        .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); margin-bottom: 20px; }
+        .hero-tag::before { content: ''; display: block; width: 16px; height: 1px; background: var(--accent2); }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(38px, 7vw, 68px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 16px; color: #fff; }
+        .hero h1 span { color: var(--accent); }
+        .hero-sub { font-family: var(--font-display); font-size: clamp(16px, 2.5vw, 22px); font-weight: 500; color: var(--muted); margin-bottom: 24px; }
+        .hero-about { max-width: 700px; color: rgba(226,226,233,0.75); font-size: 13.5px; line-height: 1.8; margin-bottom: 32px; border-left: 2px solid var(--accent); padding-left: 20px; }
+        
+        .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 4px; font-size: 11px; color: #a5a5b9; background: var(--surface); }
+        .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+        .badge .dot-php { background: #777BB4; }
+        .badge .dot-py { background: #3776AB; }
+        .badge .dot-aws { background: #FF9900; }
+        .badge .dot-db { background: var(--accent2); }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: all 0.2s; cursor: pointer; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+        .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); }
+
+        section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+        .section-label { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; font-weight: 700; }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .stack-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 20px; }
+        .stack-card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; font-weight: 700; }
+        .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: rgba(99,102,241,0.06); color: #9fa2fc; border: 1px solid rgba(99,102,241,0.15); }
+        .tag-teal { background: rgba(45,212,191,0.06); color: var(--accent2); border-color: rgba(45,212,191,0.15); }
+        .tag-warm { background: rgba(251,146,60,0.06); color: var(--warm); border-color: rgba(251,146,60,0.15); }
+        .tag-red { background: rgba(244,63,94,0.06); color: var(--accent3); border-color: rgba(244,63,94,0.15); }
+
+        .exp-list { display: flex; flex-direction: column; gap: 24px; }
+        .exp-item { display: grid; grid-template-columns: 160px 1fr; gap: 16px; background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 6px; }
+        .exp-date { font-size: 12px; color: var(--muted); }
+        .exp-company { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: #fff; margin-bottom: 2px; }
+        .exp-role { font-size: 12px; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .exp-points { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .exp-points li { font-size: 12.5px; color: rgba(226,226,233,0.65); padding-left: 14px; position: relative; }
+        .exp-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+        .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: all 0.25s; }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99,102,241,0.05); }
+        .project-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+        .project-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: #fff; margin-bottom: 4px; }
+        .project-domain { font-size: 11px; text-transform: uppercase; color: var(--accent2); margin-bottom: 12px; font-weight: 500; }
+        .project-desc { font-size: 12.5px; color: rgba(226,226,233,0.6); margin-bottom: 16px; }
+        .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+        .project-stack span { font-size: 10px; padding: 3px 8px; background: var(--surface2); border-radius: 4px; color: var(--muted); border: 1px solid var(--border); }
+
+        .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+        .cert-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px; display: flex; align-items: center; gap: 16px; }
+        .cert-icon { font-size: 20px; }
+        .cert-name { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+        .cert-by { font-size: 11px; color: var(--muted); }
+
+        footer { padding: 60px 0 20px; text-align: center; border-top: 1px solid var(--border); }
+        .footer-name { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .footer-name span { color: var(--accent); }
+        .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; margin-right: 8px; box-shadow: 0 0 8px #10b981; }
+        .footer-links { display: flex; justify-content: center; gap: 24px; margin-top: 16px; }
+        .footer-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent2); }
+
+        @media (max-width: 768px) {
+            .exp-item { grid-template-columns: 1fr; gap: 8px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="noise"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">M<span>.</span>Hassan</a>
+        <div class="nav-links">
+            <a href="#stack">Stack</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#certs">Certifications</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="hero-tag">Senior Backend Engineer · 6+ Years Production Exp</div>
+        <h1>Muhammad<br><span>Hassan</span></h1>
+        <p class="hero-sub">PHP · Python · AWS Ecosystems · Distributed Systems</p>
+        <p class="hero-about">
+            Building reliable, fast enterprise logic engines that drive real corporate platforms. Expert at engineering systems across Fintech, E-commerce, automated HR systems, customizable ERP, and cloud blockchain data lookup networks.
+        </p>
+        <div class="badges">
+            <span class="badge"><span class="dot dot-php"></span>Laravel · Symfony · Silex</span>
+            <span class="badge"><span class="dot dot-py"></span>Django · DRF</span>
+            <span class="badge"><span class="dot dot-aws"></span>AWS EC2 · SQS · S3</span>
+            <span class="badge"><span class="dot dot-db"></span>MySQL · Redis Cache</span>
+        </div>
+        <div style="display:flex; gap: 12px; flex-wrap: wrap;">
+            <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank" class="btn btn-primary">→ Connect on LinkedIn</a>
+            <a href="mailto:hassan.softwareengineer007@gmail.com" class="btn btn-ghost">↗ Direct Email</a>
+        </div>
+    </section>
+
+    <section id="stack">
+        <div class="section-label">Technical Stack</div>
+        <div class="stack-grid">
+            <div class="stack-card">
+                <div class="stack-card-label">Core Languages</div>
+                <div class="stack-tags">
+                    <span class="tag">PHP</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-label">Framework Architectures</div>
+                <div class="stack-tags">
+                    <span class="tag">Laravel Engine</span><span class="tag">Symfony Framework</span><span class="tag">Silex Micro</span><span class="tag">Django</span><span class="tag">DRF</span>
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-label">Cloud infrastructure</div>
+                <div class="stack-tags">
+                    <span class="tag-teal tag">AWS EC2</span><span class="tag-teal tag">AWS SQS</span><span class="tag-teal tag">AWS S3 Storage</span><span class="tag-teal tag">Docker containers</span>
+                </div>
+            </div>
+            <div class="stack-card">
+                <div class="stack-card-label">Storage & Messaging</div>
+                <div class="stack-tags">
+                    <span class="tag-warm tag">MySQL Database</span><span class="tag-warm tag">Redis InMemory</span><span class="tag-warm tag">SQL Server</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-label">Professional Experience</div>
+        <div class="exp-list">
+            <div class="exp-item">
+                <div class="exp-date">Dec 2023 – Dec 2025</div>
+                <div>
+                    <div class="exp-company">PureLogics</div>
+                    <div class="exp-role">Senior Software Engineer · Hybrid</div>
+                    <ul class="exp-points">
+                        <li>Owned user requirements maps and turned them into clean, distributed service code bases.</li>
+                        <li>Configured staging and production pipelines with AWS deployment mechanics.</li>
+                        <li>Delivered scalable custom software implementations ahead of high-pressure milestones.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-date">Jun 2022 – Dec 2023</div>
+                <div>
+                    <div class="exp-company">PureLogics</div>
+                    <div class="exp-role">Software Engineer</div>
+                    <ul class="exp-points">
+                        <li>Built custom platform databases from scratch, mapping complex transactional query indices.</li>
+                        <li>Managed internal technical sprint priorities to balance software feature performance.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-date">Apr 2021 – May 2022</div>
+                <div>
+                    <div class="exp-company">Coeus Solutions GmbH</div>
+                    <div class="exp-role">Software Engineer</div>
+                    <ul class="exp-points">
+                        <li>Crafted external web endpoints and mobile API architectures utilizing Symfony MVC patterns.</li>
+                        <li>Reduced data response lag by utilizing specialized query tuning with Redis cache layers.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-label">Featured Work Projects</div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-meta"><span>Fintech</span><span>2025</span></div>
+                <div class="project-name">Payroll Management System</div>
+                <div class="project-domain">PureLogics Engine</div>
+                <div class="project-desc">Automated payroll engine handling dynamic complex tax deductions, loan management, and secure administrative JWT processing patterns.</div>
+                <div class="project-stack"><span>Django 5</span><span>DRF</span><span>MySQL</span><span>JWT</span></div>
+            </div>
+            <div class="project-card">
+                <div class="project-meta"><span>LegalTech</span><span>2024</span></div>
+                <div class="project-name">Legal Ninja Service</div>
+                <div class="project-domain">PureLogics Automation</div>
+                <div class="project-desc">Lawyer portal management toolkit linking dynamic client info with AWS SQS queues, Stripe payments, and secure Box file assets.</div>
+                <div class="project-stack"><span>Laravel</span><span>AWS SQS</span><span>Stripe</span><span>Box API</span></div>
+            </div>
+            <div class="project-card">
+                <div class="project-meta"><span>Fintech Modeling</span><span>2022</span></div>
+                <div class="project-name">Dynamic Forecasting System</div>
+                <div class="project-domain">PureLogics Ecosystem</div>
+                <div class="project-desc">Sophisticated tracking utility calculating planned actual versus dynamic forecasted transactional flows with advanced formula calculations.</div>
+                <div class="project-stack"><span>Laravel 9</span><span>Math Parser</span><span>AWS</span><span>MySQL</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certs">
+        <div class="section-label">Licenses & Certifications</div>
+        <div class="certs-grid">
+            <div class="cert-item"><div class="cert-icon">📊</div><div><div class="cert-name">SQL for Data Science</div><div class="cert-by">UC Davis (Coursera)</div></div></div>
+            <div class="cert-item"><div class="cert-icon">💻</div><div><div class="cert-name">SQL Intermediate / Basic</div><div class="cert-by">HackerRank Verification</div></div></div>
+            <div class="cert-item"><div class="cert-icon">🛠️</div><div><div class="cert-name">Introduction to Git and GitHub</div><div class="cert-by">Google Training</div></div></div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p class="footer-name">Muhammad <span>Hassan</span></p>
+    <p style="font-size:12px; color:var(--muted);"><span class="status-dot"></span>Available for Technical Collaborations · Gujranwala, PK</p>
+    <div class="footer-links">
+        <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/m-hassan007" target="_blank">GitHub</a>
+    </div>
+</footer>
+
+</body>
+</html>
