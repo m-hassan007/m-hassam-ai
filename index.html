@@ -1,960 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muhammad Hassan — Senior Backend Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #18181f;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.12);
-    --text: #e8e8f0;
-    --muted: #6b6b80;
-    --accent: #7c6bff;
-    --accent2: #40e0c8;
-    --accent3: #ff6b6b;
-    --warm: #ffb347;
-    --font-display: 'Syne', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  .grid-bg {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      linear-gradient(rgba(124,107,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,107,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .noise {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px;
-  }
-
-  .glow {
-    position: fixed; pointer-events: none; z-index: 0;
-    border-radius: 50%; filter: blur(120px); opacity: 0.08;
-  }
-  .glow-1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -100px; }
-  .glow-2 { width: 400px; height: 400px; background: var(--accent2); bottom: -100px; right: -100px; }
-
-  main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
-
-  /* HERO */
-  .hero {
-    padding: 80px 0 60px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--accent2); margin-bottom: 24px;
-  }
-  .hero-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent2); }
-
-  .hero-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 28px;
-    border: 2px solid var(--border2);
-    box-shadow: 0 0 20px rgba(124,107,255,0.15);
-    transition: all 0.3s ease;
-  }
-  .hero-avatar:hover {
-    border-color: var(--accent);
-    box-shadow: 0 0 25px rgba(124,107,255,0.3);
-    transform: scale(1.03);
-  }
-  .hero-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 8vw, 72px);
-    font-weight: 800;
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-  }
-
-  .hero h1 span { color: var(--accent); }
-
-  .hero-sub {
-    font-family: var(--font-display);
-    font-size: clamp(16px, 3vw, 22px);
-    font-weight: 400;
-    color: var(--muted);
-    margin-bottom: 32px;
-  }
-
-  .hero-about {
-    max-width: 600px;
-    color: rgba(232,232,240,0.7);
-    font-size: 13px;
-    line-height: 1.8;
-    margin-bottom: 36px;
-    border-left: 2px solid var(--accent);
-    padding-left: 20px;
-  }
-
-  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 14px;
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    font-size: 11px; letter-spacing: 0.05em;
-    color: var(--muted);
-    background: var(--surface);
-    transition: all 0.2s;
-  }
-  .badge:hover { border-color: var(--accent); color: var(--accent); }
-  .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
-  .badge .dot-php { background: #777BB4; }
-  .badge .dot-py { background: #3776AB; }
-  .badge .dot-aws { background: #FF9900; }
-  .badge .dot-db { background: var(--accent2); }
-  .badge .dot-dk { background: #2496ED; }
-
-  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
-
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 10px 20px;
-    font-family: var(--font-mono);
-    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: all 0.2s;
-    cursor: pointer; border: none;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { background: #6a59ee; transform: translateY(-1px); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border2);
-  }
-  .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-1px); }
-
-  /* SECTIONS */
-  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
-
-  .section-label {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 32px;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* STACK */
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  .stack-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px 20px;
-    transition: all 0.2s;
-  }
-  .stack-card:hover { border-color: var(--border2); background: var(--surface2); }
-  .stack-card.highlighted { border-color: var(--accent2); box-shadow: 0 0 10px rgba(64,224,200,0.15); }
-
-  .stack-card-label {
-    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 10px;
-  }
-
-  .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-
-  .tag {
-    font-size: 11px; padding: 3px 8px;
-    border-radius: 3px;
-    background: rgba(124,107,255,0.05);
-    color: var(--accent);
-    border: 1px solid rgba(124,107,255,0.15);
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .tag:hover { background: var(--accent); color: #fff; }
-
-  .tag-teal { background: rgba(64,224,200,0.04); color: var(--accent2); border-color: rgba(64,224,200,0.15); }
-  .tag-teal:hover { background: var(--accent2); color: #000; }
-  .tag-warm { background: rgba(255,179,71,0.04); color: var(--warm); border-color: rgba(255,179,71,0.15); }
-  .tag-warm:hover { background: var(--warm); color: #000; }
-  .tag-red { background: rgba(255,107,107,0.04); color: var(--accent3); border-color: rgba(255,107,107,0.15); }
-  .tag-red:hover { background: var(--accent3); color: #fff; }
-
-  /* EXPERIENCE */
-  .exp-list { display: flex; flex-direction: column; gap: 0; }
-
-  .exp-item {
-    display: grid; grid-template-columns: 1px 1fr;
-    gap: 0 24px;
-    padding-bottom: 32px;
-  }
-
-  .exp-line {
-    position: relative;
-    background: var(--border);
-  }
-  .exp-line::before {
-    content: '';
-    position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-  }
-
-  .exp-content { padding-top: 2px; }
-
-  .exp-meta {
-    display: flex; align-items: baseline; gap: 10px;
-    flex-wrap: wrap; margin-bottom: 4px;
-  }
-
-  .exp-company {
-    font-family: var(--font-display); font-weight: 600; font-size: 15px;
-    color: var(--text);
-  }
-
-  .exp-date {
-    font-size: 11px; color: var(--muted); letter-spacing: 0.05em;
-  }
-
-  .exp-role {
-    font-size: 12px; color: var(--accent2); letter-spacing: 0.08em;
-    text-transform: uppercase; margin-bottom: 10px;
-  }
-
-  .exp-points {
-    list-style: none; display: flex; flex-direction: column; gap: 4px;
-  }
-  .exp-points li {
-    font-size: 12px; color: rgba(232,232,240,0.6);
-    padding-left: 16px; position: relative;
-  }
-  .exp-points li::before {
-    content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 10px; top: 2px;
-  }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 20px 22px;
-    transition: all 0.25s;
-    position: relative; overflow: hidden;
-  }
-
-  .project-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(124,107,255,0.04) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(124,107,255,0.1);
-  }
-
-  .project-num {
-    font-size: 10px; letter-spacing: 0.15em; color: var(--muted);
-    margin-bottom: 10px;
-  }
-
-  .project-name {
-    font-family: var(--font-display); font-weight: 600; font-size: 16px;
-    color: var(--text); margin-bottom: 6px;
-  }
-
-  .project-domain {
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent2); margin-bottom: 10px;
-  }
-
-  .project-desc {
-    font-size: 12px; color: rgba(232,232,240,0.55); line-height: 1.7;
-    margin-bottom: 14px;
-  }
-
-  .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
-
-  .project-stack span {
-    font-size: 10px; padding: 2px 7px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 3px; color: var(--muted);
-    border: 1px solid var(--border);
-  }
-
-  /* VISUAL CERTIFICATES SECTIONS */
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-  }
-
-  .cert-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.25s ease;
-  }
-
-  .cert-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(124,107,255,0.12);
-  }
-
-  .cert-img-wrapper {
-    width: 100%;
-    height: 190px;
-    background: #0d0d14;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-  }
-
-  .cert-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    transition: transform 0.3s ease;
-  }
-
-  .cert-card:hover .cert-img-wrapper img {
-    transform: scale(1.04);
-  }
-
-  .cert-info-box {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-grow: 1;
-  }
-
-  .cert-title {
-    font-family: var(--font-display);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .cert-issuer {
-    font-size: 11px;
-    color: var(--accent2);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cert-id {
-    font-size: 11px;
-    color: var(--muted);
-    font-family: var(--font-mono);
-  }
-
-  .cert-skills {
-    font-size: 11px;
-    color: var(--warm);
-    margin-top: 2px;
-  }
-
-  .cert-meta-footer {
-    margin-top: auto;
-    padding-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px dashed var(--border);
-  }
-
-  .cert-date {
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .cert-view-btn {
-    font-size: 11px;
-    color: var(--accent);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-  }
-  .cert-view-btn:hover {
-    color: #fff;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 40px 0;
-    text-align: center;
-  }
-
-  .footer-name {
-    font-family: var(--font-display); font-size: 28px; font-weight: 800;
-    letter-spacing: -0.02em; margin-bottom: 8px;
-  }
-  .footer-tagline { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
-
-  .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-  .footer-link {
-    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-link:hover { color: var(--accent2); }
-
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 0;
-  }
-
-  .nav-inner {
-    max-width: 900px; margin: 0 auto; padding: 0 24px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  .nav-logo {
-    font-family: var(--font-display); font-size: 14px; font-weight: 700;
-    color: var(--text); text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links { display: flex; gap: 24px; }
-
-  .nav-links a {
-    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent2); }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero > * { animation: fadeUp 0.6s ease both; }
-  .hero > *:nth-child(1) { animation-delay: 0.05s; }
-  .hero > *:nth-child(2) { animation-delay: 0.12s; }
-  .hero > *:nth-child(3) { animation-delay: 0.18s; }
-  .hero > *:nth-child(4) { animation-delay: 0.25s; }
-  .hero > *:nth-child(5) { animation-delay: 0.32s; }
-  .hero > *:nth-child(6) { animation-delay: 0.38s; }
-
-  .status-dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    background: #22c55e; margin-right: 6px;
-    box-shadow: 0 0 6px #22c55e;
-    animation: pulse 2s ease infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  @media (max-width: 600px) {
-    .nav-links { display: none; }
-    .projects-grid { grid-template-columns: 1fr; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Hassan — Senior Backend Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0a0a0f; 
+            --surface: #111118; 
+            --surface2: #18181f; 
+            --border: rgba(255,255,255,0.07); 
+            --border2: rgba(255,255,255,0.12); 
+            --text: #e8e8f0; 
+            --muted: #6b6b80; 
+            --accent: #7c6bff; 
+            --accent2: #40e0c8; 
+            --accent3: #ff6b6b; 
+            --warm: #ffb347; 
+            --font-display: 'Syne', sans-serif; 
+            --font-mono: 'DM Mono', monospace; 
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.7; overflow-x: hidden; }
+        .grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(124,107,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(124,107,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        .noise { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; }
+        .glow { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: 0.08; }
+        .glow-1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -100px; }
+        .glow-2 { width: 400px; height: 400px; background: var(--accent2); bottom: -100px; right: -100px; }
+        main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+        /* HERO */
+        .hero { padding: 80px 0 60px; border-bottom: 1px solid var(--border); }
+        .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent2); margin-bottom: 24px; }
+        .hero-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent2); }
+        .hero-avatar { width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin-bottom: 28px; border: 2px solid var(--border2); box-shadow: 0 0 20px rgba(124,107,255,0.15); transition: all 0.3s ease; }
+        .hero-avatar:hover { border-color: var(--accent); box-shadow: 0 0 25px rgba(124,107,255,0.3); transform: scale(1.03); }
+        .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(40px, 8vw, 72px); font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 8px; }
+        .hero h1 span { color: var(--accent); }
+        .hero-sub { font-family: var(--font-display); font-size: clamp(16px, 3vw, 22px); font-weight: 400; color: var(--muted); margin-bottom: 32px; }
+        .hero-about { max-width: 600px; color: rgba(232,232,240,0.7); font-size: 13px; line-height: 1.8; margin-bottom: 36px; border-left: 2px solid var(--accent); padding-left: 20px; }
+        .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid var(--border2); border-radius: 4px; font-size: 11px; letter-spacing: 0.05em; color: var(--muted); background: var(--surface); transition: all 0.2s; }
+        .badge:hover { border-color: var(--accent); color: var(--accent); }
+        .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+        .badge .dot-php { background: #777BB4; }
+        .badge .dot-py { background: #3776AB; }
+        .badge .dot-aws { background: #FF9900; }
+        .badge .dot-db { background: var(--accent2); }
+        .badge .dot-dk { background: #2496ED; }
+        .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border-radius: 4px; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #6a59ee; transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border2); }
+        .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-1px); }
+
+        /* SECTIONS */
+        section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+        .section-label { display: flex; align-items: center; gap: 12px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        /* STACK */
+        .stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .stack-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; transition: all 0.2s; }
+        .stack-card:hover { border-color: var(--border2); background: var(--surface2); }
+        .stack-card.highlighted { border-color: var(--accent2); box-shadow: 0 0 10px rgba(64,224,200,0.15); }
+        .stack-card-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { font-size: 11px; padding: 3px 8px; border-radius: 3px; background: rgba(124,107,255,0.05); color: var(--accent); border: 1px solid rgba(124,107,255,0.15); cursor: pointer; transition: all 0.15s ease; }
+        .tag:hover { background: var(--accent); color: #fff; }
+        .tag-teal { background: rgba(64,224,200,0.04); color: var(--accent2); border-color: rgba(64,224,200,0.15); }
+        .tag-teal:hover { background: var(--accent2); color: #000; }
+        .tag-warm { background: rgba(255,179,71,0.04); color: var(--warm); border-color: rgba(255,179,71,0.15); }
+        .tag-warm:hover { background: var(--warm); color: #000; }
+        .tag-red { background: rgba(255,107,107,0.04); color: var(--accent3); border-color: rgba(255,107,107,0.15); }
+        .tag-red:hover { background: var(--accent3); color: #fff; }
+
+        /* EXPERIENCE */
+        .exp-list { display: flex; flex-direction: column; gap: 0; }
+        .exp-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 24px; padding-bottom: 32px; }
+        .exp-line { position: relative; background: var(--border); }
+        .exp-line::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .exp-content { padding-top: 2px; }
+        .exp-meta { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+        .exp-company { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--text); }
+        .exp-date { font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+        .exp-role { font-size: 12px; color: var(--accent2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+        .exp-points { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .exp-points li { font-size: 12px; color: rgba(232,232,240,0.6); padding-left: 16px; position: relative; }
+        .exp-points li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 10px; top: 2px; }
+
+        /* PROJECTS */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; transition: all 0.25s; position: relative; overflow: hidden; }
+        .project-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(124,107,255,0.04) 0%, transparent 60%); pointer-events: none; }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,107,255,0.1); }
+        .project-num { font-size: 10px; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 10px; }
+        .project-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--text); margin-bottom: 6px; }
+        .project-domain { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-bottom: 10px; }
+        .project-desc { font-size: 12px; color: rgba(232,232,240,0.55); line-height: 1.7; margin-bottom: 14px; }
+        .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+        .project-stack span { font-size: 10px; padding: 2px 7px; background: rgba(255,255,255,0.05); border-radius: 3px; color: var(--muted); border: 1px solid var(--border); }
+
+        /* FOOTER */
+        footer { padding: 40px 0; text-align: center; }
+        .footer-name { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+        .footer-tagline { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+        .footer-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .footer-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .footer-link:hover { color: var(--accent2); }
+
+        /* NAV */
+        nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; }
+        .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text); text-decoration: none; }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 24px; }
+        .nav-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent2); }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero > * { animation: fadeUp 0.6s ease both; }
+        .hero > *:nth-child(1) { animation-delay: 0.05s; }
+        .hero > *:nth-child(2) { animation-delay: 0.12s; }
+        .hero > *:nth-child(3) { animation-delay: 0.18s; }
+        .hero > *:nth-child(4) { animation-delay: 0.25s; }
+        .hero > *:nth-child(5) { animation-delay: 0.32s; }
+        .hero > *:nth-child(6) { animation-delay: 0.38s; }
+        
+        @media (max-width: 600px) { .nav-links { display: none; } .projects-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
+    <div class="grid-bg"></div>
+    <div class="noise"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
 
-<div class="grid-bg"></div>
-<div class="noise"></div>
-<div class="glow glow-1"></div>
-<div class="glow glow-2"></div>
-
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">M<span>.</span>Hassan</a>
-    <div class="nav-links">
-      <a href="#stack">Stack</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#certs">Certs</a>
-    </div>
-  </div>
-</nav>
-
-<main>
-  <div class="hero">
-    <div class="hero-tag">Senior Backend Engineer · 6+ Years Production Experience</div>
-    
-    <div class="hero-avatar">
-      <img src="profile-DP.png" alt="Muhammad Hassan">
-    </div>
-
-    <h1>Muhammad<br><span>Hassan</span></h1>
-    <p class="hero-sub">PHP · Python · AWS · AI-Integrated Systems</p>
-    <p class="hero-about">
-      Backend Engineer specializing in PHP (Laravel, Symfony, Silex, Moodle) and Python (Django), focused on building scalable and reliable systems that solve real business problems.
-      I've worked on production-grade systems across diverse domains — including Fintech, E-commerce, ERP, POS, Payroll, LMS, Forecasting Systems, and NFT platforms — handling high-volume transactions, designing APIs, optimizing database performance, and building event-driven architectures for maintainability and scale.
-      <br><br>
-      Beyond the technical side, I bring full ownership from system design through deployment; a focus on debugging and optimizing existing systems, not just building new ones; simplifying complex problems into clean, maintainable solutions; experience building mobile APIs for cross-platform applications; and project and sprint planning, coordinating with teams and clients for successful delivery.
-      <br><br>
-      Open to backend roles where architecture, performance, and code quality are priorities.
-    </p>
-    <div class="badges">
-      <span class="badge"><span class="dot dot-php"></span>Laravel · Symfony · Silex</span>
-      <span class="badge"><span class="dot dot-py"></span>Django · DRF</span>
-      <span class="badge"><span class="dot dot-aws"></span>AWS · EC2 · SQS · S3</span>
-      <span class="badge"><span class="dot dot-db"></span>MySQL · Redis</span>
-      <span class="badge"><span class="dot dot-dk"></span>Docker · DevOps</span>
-    </div>
-    <div class="hero-links">
-      <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank" class="btn btn-primary">→ LinkedIn Profile</a>
-      <a href="mailto:mhassan7te@gmail.com" class="btn btn-ghost">↗ Get in Touch</a>
-    </div>
-  </div>
-
-  <section id="stack">
-    <div class="section-label">Tech Stack</div>
-    <div class="stack-grid">
-      <div class="stack-card">
-        <div class="stack-card-label">Languages</div>
-        <div class="stack-tags">
-          <span class="tag">PHP</span>
-          <span class="tag">Python</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">SQL</span>
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">M<span>.</span>Hassan</a>
+            <div class="nav-links">
+                <a href="#stack">Stack</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+            </div>
         </div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-card-label">Frameworks</div>
-        <div class="stack-tags">
-          <span class="tag">Laravel</span>
-          <span class="tag">Symfony</span>
-          <span class="tag">Silex</span>
-          <span class="tag">Moodle</span>
-          <span class="tag">Django</span>
-          <span class="tag">DRF</span>
-        </div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-card-label">Cloud & DevOps</div>
-        <div class="stack-tags">
-          <span class="tag-teal tag">AWS EC2</span>
-          <span class="tag-teal tag">SQS</span>
-          <span class="tag-teal tag">S3</span>
-          <span class="tag-teal tag">Docker</span>
-          <span class="tag-teal tag">cPanel</span>
-        </div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-card-label">Databases & Queues</div>
-        <div class="stack-tags">
-          <span class="tag-warm tag">MySQL</span>
-          <span class="tag-warm tag">Redis</span>
-          <span class="tag-warm tag">SQS Queues</span>
-        </div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-card-label">Architecture</div>
-        <div class="stack-tags">
-          <span class="tag-red tag">REST APIs</span>
-          <span class="tag-red tag">Event-driven</span>
-          <span class="tag-red tag">Microservices</span>
-          <span class="tag-red tag">Webhooks</span>
-        </div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-card-label">Tools & Integrations</div>
-        <div class="stack-tags">
-          <span class="tag">Swagger</span>
-          <span class="tag">Stripe</span>
-          <span class="tag">Pusher</span>
-          <span class="tag">Git</span>
-          <span class="tag">Box</span>
-        </div>
-      </div>
-    </div>
-  </section>
+    </nav>
 
-  <section id="experience">
-    <div class="section-label">Work Experience</div>
-    <div class="exp-list">
-
-      <div class="exp-item">
-        <div class="exp-line"></div>
-        <div class="exp-content">
-          <div class="exp-meta">
-            <span class="exp-company">PureLogics</span>
-            <span class="exp-date">Dec 2023 – Dec 2025 · 2 yrs 1 mo</span>
-          </div>
-          <div class="exp-role">Senior Software Engineer · Hybrid</div>
-          <ul class="exp-points">
-            <li>Managed client relationships and ensured on-time software delivery.</li>
-            <li>Developed scalable systems from scratch with clean architecture principles.</li>
-            <li>Built robust back-ends using Laravel, Symfony, and Silex.</li>
-            <li>Deployed on AWS staging and live environments with DevOps collaboration.</li>
-            <li>Provided estimations and consistently met project deadlines.</li>
-          </ul>
+    <main>
+        <div class="hero">
+            <div class="hero-tag">Senior Backend Engineer · 6+ Years Production Experience</div>
+            <div class="hero-avatar">
+                <img src="profile-DP.png" alt="Muhammad Hassan">
+            </div>
+            <h1>Muhammad<br><span>Hassan</span></h1>
+            <p class="hero-sub">PHP · Python · AWS · AI-Integrated Systems</p>
+            <p class="hero-about">
+                Backend Engineer specializing in PHP (Laravel, Symfony, Silex, Moodle) and Python (Django), focused on building scalable and reliable systems that solve real business problems. I've worked on production-grade systems across diverse domains — including Fintech, E-commerce, ERP, POS, Payroll, LMS, Forecasting Systems, and NFT platforms — handling high-volume transactions, designing APIs, optimizing database performance, and building event-driven architectures for maintainability and scale.
+                <br><br>
+                Beyond the technical side, I bring full ownership from system design through deployment; a focus on debugging and optimizing existing systems, not just building new ones; simplifying complex problems into clean, maintainable solutions; experience building mobile APIs for cross-platform applications; and project and sprint planning, coordinating with teams and clients for successful delivery.
+                <br><br>
+                Open to backend roles where architecture, performance, and code quality are priorities.
+            </p>
+            <div class="badges">
+                <span class="badge"><span class="dot dot-php"></span>Laravel · Symfony · Silex</span>
+                <span class="badge"><span class="dot dot-py"></span>Django · DRF</span>
+                <span class="badge"><span class="dot dot-aws"></span>AWS · EC2 · SQS · S3</span>
+                <span class="badge"><span class="dot dot-db"></span>MySQL · Redis</span>
+                <span class="badge"><span class="dot dot-dk"></span>Docker · DevOps</span>
+            </div>
+            <div class="hero-links">
+                <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank" class="btn btn-primary">→ LinkedIn Profile</a>
+                <a href="mailto:mhassan7te@gmail.com" class="btn btn-ghost">↗ Get in Touch</a>
+            </div>
         </div>
-      </div>
 
-      <div class="exp-item">
-        <div class="exp-line"></div>
-        <div class="exp-content">
-          <div class="exp-meta">
-            <span class="exp-company">PureLogics</span>
-            <span class="exp-date">Jun 2022 – Dec 2023 · 1 yr 7 mo</span>
-          </div>
-          <div class="exp-role">Software Engineer · Lahore, Pakistan</div>
-          <ul class="exp-points">
-            <li>Managed clients and coordinated teams to meet project deadlines.</li>
-            <li>Built software from scratch including database structure and back-end logic.</li>
-            <li>Deployed code on AWS environments, coordinating with DevOps.</li>
-          </ul>
+        <section id="stack">
+            <div class="section-label">Tech Stack</div>
+            <div class="stack-grid">
+                <div class="stack-card">
+                    <div class="stack-card-label">Languages</div>
+                    <div class="stack-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-label">Frameworks</div>
+                    <div class="stack-tags">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Symfony</span>
+                        <span class="tag">Silex</span>
+                        <span class="tag">Livewire</span>
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">DRF</span>
+                    </div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-label">Cloud & DevOps</div>
+                    <div class="stack-tags">
+                        <span class="tag-teal tag">AWS EC2</span>
+                        <span class="tag-teal tag">SQS</span>
+                        <span class="tag-teal tag">S3</span>
+                        <span class="tag-teal tag">Docker</span>
+                        <span class="tag-teal tag">cPanel</span>
+                    </div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-label">Databases & Queues</div>
+                    <div class="stack-tags">
+                        <span class="tag-warm tag">MySQL</span>
+                        <span class="tag-warm tag">Redis</span>
+                        <span class="tag-warm tag">SQS Queues</span>
+                    </div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-label">Architecture</div>
+                    <div class="stack-tags">
+                        <span class="tag-red tag">REST APIs</span>
+                        <span class="tag-red tag">Event-driven</span>
+                        <span class="tag-red tag">Microservices</span>
+                        <span class="tag-red tag">Webhooks</span>
+                    </div>
+                </div>
+                <div class="stack-card">
+                    <div class="stack-card-label">Tools & Integrations</div>
+                    <div class="stack-tags">
+                        <span class="tag">PostHog</span>
+                        <span class="tag">Swagger</span>
+                        <span class="tag">Stripe</span>
+                        <span class="tag">Pusher</span>
+                        <span class="tag">Git</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="section-label">Work Experience</div>
+            <div class="exp-list">
+                <div class="exp-item">
+                    <div class="exp-line"></div>
+                    <div class="exp-content">
+                        <div class="exp-meta">
+                            <span class="exp-company">Remit Choice Limited</span>
+                            <span class="exp-date">Feb 2026 – Present · Remote (Sheffield, UK)</span>
+                        </div>
+                        <div class="exp-role">Senior Software Engineer · Full-time</div>
+                        <ul class="exp-points">
+                            <li>Built and maintained scalable backend services using a modular Laravel architecture, powering both web and mobile applications.</li>
+                            <li>Designed and developed RESTful APIs consumed by the mobile team and integrated with third-party payment and payout providers.</li>
+                            <li>Built interactive front-end features using Livewire and Vue.js to support internal tools and dashboards.</li>
+                            <li>Automated transaction processing workflows using event-driven architecture (Laravel Events/Listeners) and queued jobs, significantly reducing manual intervention.</li>
+                            <li>Developed and maintained an Account Management System (AMS) for reporting, enabling efficient processing and analysis of large datasets with reduced turnaround time.</li>
+                            <li>Implemented secure, encrypted webhook integrations to handle real-time payment and payout events reliably.</li>
+                            <li>Integrated PostHog for analytics and event tracking across signup, transaction, and payout flows to support data-driven decision-making.</li>
+                            <li>Diagnosed and resolved complex issues in financial workflows, ensuring transaction accuracy and system reliability.</li>
+                            <li>Owned features end-to-end — from requirements gathering and implementation to testing and production deployment.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-line"></div>
+                    <div class="exp-content">
+                        <div class="exp-meta">
+                            <span class="exp-company">PureLogics</span>
+                            <span class="exp-date">Jun 2022 – Dec 2025 · 3 yrs 7 mos</span>
+                        </div>
+                        <div class="exp-role">Senior Software Engineer · Lahore, Pakistan</div>
+                        <ul class="exp-points">
+                            <li>Managed client relationships and ensured on-time software delivery.</li>
+                            <li>Developed scalable systems from scratch with clean architecture principles.</li>
+                            <li>Built robust back-ends using Laravel, Symfony, and Silex.</li>
+                            <li>Deployed on AWS staging and live environments with DevOps collaboration.</li>
+                            <li>Provided estimations and consistently met project deadlines.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-line"></div>
+                    <div class="exp-content">
+                        <div class="exp-meta">
+                            <span class="exp-company">Coeus Solutions GmbH</span>
+                            <span class="exp-date">Apr 2021 – May 2022 · 1 yr 2 mo</span>
+                        </div>
+                        <div class="exp-role">Software Engineer · Lahore, Pakistan</div>
+                        <ul class="exp-points">
+                            <li>Built HTTP APIs and web development projects.</li>
+                            <li>Diagnosed and improved API performance and availability.</li>
+                            <li>Leveraged PHP, MySQL, Symfony MVC, Git, Redis, and Docker.</li>
+                            <li>Implemented third-party SOAP client APIs.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-line"></div>
+                    <div class="exp-content">
+                        <div class="exp-meta">
+                            <span class="exp-company">Prismatic Technologies Limited</span>
+                            <span class="exp-date">Dec 2019 – Apr 2021 · 1 yr 5 mo</span>
+                        </div>
+                        <div class="exp-role">Software Engineer · Lahore, Pakistan</div>
+                        <ul class="exp-points">
+                            <li>Engineered PHP, MySQL, and Laravel MVC framework back-end development layouts.</li>
+                            <li>Implemented complex client requirements and integrated critical third-party REST APIs.</li>
+                            <li>Collaborated smoothly within fast-paced Agile/Scrum sprint environments.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-label">Featured Projects</div>
+            <div class="projects-grid">
+                <div class="project-card" onclick="window.open('https://accounts.sandbox.remit-choice.com/rcl/login', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">01 · Feb 2026 – Present</div>
+                    <div class="project-name">AMS – Account Management System ↗</div>
+                    <div class="project-domain">Fintech · Remit Choice Limited</div>
+                    <div class="project-desc">An internal reporting and account management platform built to handle large volumes of transactional data efficiently, with automated processing to minimize manual work.</div>
+                    <div class="project-stack">
+                        <span>Laravel</span><span>MySQL</span><span>Livewire</span><span>JavaScript</span><span>Webhooks</span><span>Queue Jobs</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://www.remitchoice.com/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">02 · Feb 2026 – Present</div>
+                    <div class="project-name">Remit Choice ↗</div>
+                    <div class="project-domain">Fintech · Remit Choice Limited</div>
+                    <div class="project-desc">Fintech remittance platform enabling international money transfer via mobile app and web, backed by a centralized Laravel backend system.</div>
+                    <div class="project-stack">
+                        <span>Laravel</span><span>Livewire</span><span>Vue.js</span><span>REST APIs</span><span>MySQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://online.remitchoice.org/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">03 · Feb 2026 – Present</div>
+                    <div class="project-name">Remit Choice Online ↗</div>
+                    <div class="project-domain">Fintech · Remit Choice Limited</div>
+                    <div class="project-desc">Web-based remittance platform allowing users to send money online, integrated with the core Remit Choice backend system.</div>
+                    <div class="project-stack">
+                        <span>Laravel</span><span>Livewire</span><span>JavaScript</span><span>REST APIs</span><span>MySQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://payroll.server3.purelogics.net/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">04 · Jan 2025 – Present</div>
+                    <div class="project-name">Payroll System ↗</div>
+                    <div class="project-domain">Fintech · PureLogics</div>
+                    <div class="project-desc">Full-stack payroll management with automated salary calculations, employee loan management, dynamic tax handling, and real-time analytics dashboards.</div>
+                    <div class="project-stack">
+                        <span>Django 5.2</span><span>DRF</span><span>MySQL</span><span>JWT</span><span>Tabulator.js</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://www.legalninja.ai/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">05 · Dec 2022 – Dec 2024</div>
+                    <div class="project-name">Legal Ninja ↗</div>
+                    <div class="project-domain">LegalTech · PureLogics</div>
+                    <div class="project-desc">Lawyer's portal for legal workflow automation. Integrated Clio & Merus case managers, Box cloud storage, and Stripe payment gateway.</div>
+                    <div class="project-stack">
+                        <span>Laravel</span><span>AWS SQS</span><span>Stripe</span><span>Box</span><span>MySQL</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://www.erpfixers.com/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">06 · Aug 2022 – Nov 2022</div>
+                    <div class="project-name">ERP Fixers ↗</div>
+                    <div class="project-domain">ERP · PureLogics · Lead Dev</div>
+                    <div class="project-desc">SAP-focused ERP platform. Led full-stack development, social login, real-time Pusher communication, and backend MySQL management.</div>
+                    <div class="project-stack">
+                        <span>Laravel 9</span><span>Pusher</span><span>MySQL</span><span>JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://marketplace.4art-technologies.com/home', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">07 · Apr 2021 – Jun 2022</div>
+                    <div class="project-name">4ART Platform ↗</div>
+                    <div class="project-domain">NFT · Art · Coeus Solutions GmbH</div>
+                    <div class="project-desc">Art NFT platform: Backend Admin Panel, Marketplace, and main API backend. RESTful APIs, SQS queue management, MailJet + Webhooks, Dockerized admin.</div>
+                    <div class="project-stack">
+                        <span>Symfony</span><span>Docker</span><span>Redis</span><span>SQS</span><span>Swagger</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://checkanynft.com/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">08 · Jan 2021 – Jun 2022</div>
+                    <div class="project-name">Check Any NFT ↗</div>
+                    <div class="project-domain">Blockchain · Coeus Solutions GmbH</div>
+                    <div class="project-desc">NFT metadata lookup by blockchain hash, contract address, and token ID. Dockerized from scratch with blockchain API integration.</div>
+                    <div class="project-stack">
+                        <span>Symfony</span><span>Docker</span><span>Redis</span><span>MySQL</span><span>Swagger</span>
+                    </div>
+                </div>
+
+                <div class="project-card" onclick="window.open('https://winbid.online/', '_blank')" style="cursor:pointer;">
+                    <div class="project-num">09 · May 2020 – Dec 2020</div>
+                    <div class="project-name">winbid.online ↗</div>
+                    <div class="project-domain">E-commerce · Prismatic Technologies</div>
+                    <div class="project-desc">Multi-vendor e-commerce platform with Firebase chat, payment gateways, social logins, stock management, Twilio SMS, and Mailjet email.</div>
+                    <div class="project-stack">
+                        <span>Laravel</span><span>Firebase</span><span>Chart.js</span><span>Twilio</span><span>MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-name">Muhammad Hassan</div>
+        <div class="footer-tagline">Senior Backend Engineer</div>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank" class="footer-link">LinkedIn</a>
+            <a href="mailto:mhassan7te@gmail.com" class="footer-link">Email</a>
         </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-line"></div>
-        <div class="exp-content">
-          <div class="exp-meta">
-            <span class="exp-company">Coeus Solutions GmbH</span>
-            <span class="exp-date">Apr 2021 – May 2022 · 1 yr 2 mo</span>
-          </div>
-          <div class="exp-role">Software Engineer · Lahore, Pakistan</div>
-          <ul class="exp-points">
-            <li>Built HTTP APIs and web development projects.</li>
-            <li>Diagnosed and improved API performance and availability.</li>
-            <li>Leveraged PHP, MySQL, Symfony MVC, Git, Redis, and Docker.</li>
-            <li>Implemented third-party SOAP client APIs.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-line"></div>
-        <div class="exp-content">
-          <div class="exp-meta">
-            <span class="exp-company">Prismatic Technologies Limited</span>
-            <span class="exp-date">Dec 2019 – Apr 2021 · 1 yr 5 mo</span>
-          </div>
-          <div class="exp-role">Software Engineer · Lahore, Pakistan</div>
-          <ul class="exp-points">
-            <li>Engineered PHP, MySQL, and Laravel MVC framework back-end development layouts.</li>
-            <li>Implemented complex client requirements and integrated critical third-party REST APIs.</li>
-            <li>Collaborated smoothly within fast-paced Agile/Scrum sprint environments.</li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="section-label">Featured Projects</div>
-    <div class="projects-grid">
-
-      <div class="project-card" onclick="window.open('https://payroll.server3.purelogics.net/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">01 · Jan 2025 – Present</div>
-        <div class="project-name">Payroll System ↗</div>
-        <div class="project-domain">Fintech · PureLogics</div>
-        <div class="project-desc">Full-stack payroll management with automated salary calculations, employee loan management, dynamic tax handling, and real-time analytics dashboards.</div>
-        <div class="project-stack">
-          <span>Django 5.2</span><span>DRF</span><span>MySQL</span><span>JWT</span><span>Tabulator.js</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://www.legalninja.ai/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">02 · Dec 2022 – Dec 2024</div>
-        <div class="project-name">Legal Ninja ↗</div>
-        <div class="project-domain">LegalTech · PureLogics</div>
-        <div class="project-desc">Lawyer's portal for legal workflow automation. Integrated Clio & Merus case managers, Box cloud storage, and Stripe payment gateway.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>AWS SQS</span><span>Stripe</span><span>Box</span><span>MySQL</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://www.erpfixers.com/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">03 · Aug 2022 – Nov 2022</div>
-        <div class="project-name">ERP Fixers ↗</div>
-        <div class="project-domain">ERP · PureLogics · Lead Dev</div>
-        <div class="project-desc">SAP-focused ERP platform. Led full-stack development, social login, real-time Pusher communication, and backend MySQL management.</div>
-        <div class="project-stack">
-          <span>Laravel 9</span><span>Pusher</span><span>MySQL</span><span>JavaScript</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://marketplace.4art-technologies.com/home', '_blank')" style="cursor:pointer;">
-        <div class="project-num">04 · Apr 2021 – Jun 2022</div>
-        <div class="project-name">4ART Platform ↗</div>
-        <div class="project-domain">NFT · Art · Coeus Solutions GmbH</div>
-        <div class="project-desc">Art NFT platform: Backend Admin Panel, Marketplace, and main API backend. RESTful APIs, SQS queue management, MailJet + Webhooks, Dockerized admin.</div>
-        <div class="project-stack">
-          <span>Symfony</span><span>Docker</span><span>Redis</span><span>SQS</span><span>Swagger</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://checkanynft.com/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">05 · Jan 2021 – Jun 2022</div>
-        <div class="project-name">Check Any NFT ↗</div>
-        <div class="project-domain">Blockchain · Coeus Solutions GmbH</div>
-        <div class="project-desc">NFT metadata lookup by blockchain hash, contract address, and token ID. Dockerized from scratch with blockchain API integration.</div>
-        <div class="project-stack">
-          <span>Symfony</span><span>Docker</span><span>Redis</span><span>MySQL</span><span>Swagger</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://winbid.online/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">06 · May 2020 – Dec 2020</div>
-        <div class="project-name">winbid.online ↗</div>
-        <div class="project-domain">E-commerce · Prismatic Technologies</div>
-        <div class="project-desc">Multi-vendor e-commerce platform with Firebase chat, payment gateways, social logins, stock management, Twilio SMS, and Mailjet email.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>Firebase</span><span>Chart.js</span><span>Twilio</span><span>MySQL</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-num">07</div>
-        <div class="project-name">POS System</div>
-        <div class="project-domain">Retail · Point of Sale</div>
-        <div class="project-desc">Feature-rich Point of Sale system with FBR API integration for registered invoices, product management, and real-time sales reporting.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>MySQL</span><span>JavaScript</span><span>jQuery</span><span>FBR API</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-num">08</div>
-        <div class="project-name">Task Manager</div>
-        <div class="project-domain">Productivity · Enterprise</div>
-        <div class="project-desc">Mobile-friendly task management platform for teams and organizations. Features task scheduling, employee attendance, progress monitoring, and customizable reporting.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>MySQL</span><span>JavaScript</span><span>jQuery</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://msafdar.com/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">09</div>
-        <div class="project-name">mSafdar ↗</div>
-        <div class="project-domain">CMS · Web Development</div>
-        <div class="project-desc">Built a CMS website from scratch including database design and all business logic. Handles content management and admin panel feature integration.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>MySQL</span><span>JavaScript</span>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="window.open('https://aamc.edu.pk/', '_blank')" style="cursor:pointer;">
-        <div class="project-num">10 · Feb 2021 – Apr 2021</div>
-        <div class="project-name">Al Aleem Medical College LMS ↗</div>
-        <div class="project-domain">EdTech · Prismatic Technologies</div>
-        <div class="project-desc">Learning Management System with admin, student, and teacher portals. Course data management, attendance tracking, and progress monitoring.</div>
-        <div class="project-stack">
-          <span>Laravel</span><span>MySQL</span><span>SQL Server</span><span>JavaScript</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="certs">
-    <div class="section-label">Licenses & Certifications</div>
-    <div class="certs-grid">
-      
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="github-certificate.jpeg" alt="Introduction to Git and GitHub Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">Google</span>
-          <div class="cert-title">Introduction to Git and GitHub</div>
-          <div class="cert-id">Credential ID: 82C39RK55JGL</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued Jan 2022</span>
-            <a href="github-certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="SQL-certificate.jpeg" alt="SQL for Data Science Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">University of California, Davis</span>
-          <div class="cert-title">SQL for Data Science</div>
-          <div class="cert-id">Credential ID: XFJR4H37FC5J</div>
-          <div class="cert-skills">Skills: MySQL</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued Jun 2022</span>
-            <a href="SQL-certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="SQL-intermediate-certificate.jpeg" alt="SQL Intermediate Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">HackerRank</span>
-          <div class="cert-title">SQL (Intermediate)</div>
-          <div class="cert-id">Credential ID: 03310429f389</div>
-          <div class="cert-skills">Skills: MySQL</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued Oct 2021</span>
-            <a href="SQL-intermediate-certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="SQL-Basic-Certificate.jpeg" alt="SQL Basic Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">HackerRank</span>
-          <div class="cert-title">SQL (Basic)</div>
-          <div class="cert-id">Credential ID: 5aaa88b60d55</div>
-          <div class="cert-skills">Skills: MySQL</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued Oct 2021</span>
-            <a href="SQL-Basic-Certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="Excel-certificate.jpeg" alt="Microsoft Certified Solution Expert">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">Soft Solution</span>
-          <div class="cert-title">Microsoft Certified Solution Expert</div>
-          <div class="cert-id">System Architecture Track</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued May 2014</span>
-            <a href="Excel-certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="Microsoft-offoce-certificate.jpeg" alt="Microsoft Office Specialist Master Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">Microsoft</span>
-          <div class="cert-title">Microsoft Office Specialist: Master on Microsoft Office 2013</div>
-          <div class="cert-id">Verified Office Architecture</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Issued Nov 2018</span>
-            <a href="Microsoft-offoce-certificate.jpeg" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-img-wrapper">
-          <img src="AML-CTF-certificate.png" alt="AML/CTF Training Course Certificate">
-        </div>
-        <div class="cert-info-box">
-          <span class="cert-issuer">Compliance Training</span>
-          <div class="cert-title">AML/CTF Training Course</div>
-          <div class="cert-id">Fintech Governance Strategy</div>
-          <div class="cert-meta-footer">
-            <span class="cert-date">Compliance Assessment</span>
-            <a href="AML-CTF-certificate.png" target="_blank" class="cert-view-btn">Show Credential ↗</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <div class="section-label">Education</div>
-    <div class="stack-card" style="max-width: 420px;">
-      <div class="exp-meta" style="margin-bottom: 4px;">
-        <span class="exp-company">University of Gujrat</span>
-        <span class="exp-date">2015 – 2019</span>
-      </div>
-      <div style="font-size: 12px; color: var(--muted);">Software Engineering · Computer Science</div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <p class="footer-name">Muhammad <span style="color: var(--accent);">Hassan</span></p>
-  <p class="footer-tagline"><span class="status-dot"></span>Open to opportunities · Gujranwala, Punjab, PK</p>
-  <div class="footer-links">
-    <a href="https://www.linkedin.com/in/muhammad-hassan-b5197718b/" target="_blank" class="footer-link">LinkedIn</a>
-    <a href="https://github.com/m-hassan007" target="_blank" class="footer-link">GitHub</a>
-  </div>
-</footer>
-
-<script>
-  document.querySelectorAll('.stack-tags .tag').forEach(tag => {
-    tag.addEventListener('mouseenter', () => {
-      tag.closest('.stack-card').classList.add('highlighted');
-    });
-    tag.addEventListener('mouseleave', () => {
-      tag.closest('.stack-card').classList.remove('highlighted');
-    });
-  });
-</script>
-
+    </footer>
 </body>
 </html>
