@@ -105,6 +105,14 @@
         .project-stack { display: flex; flex-wrap: wrap; gap: 5px; }
         .project-stack span { font-size: 10px; padding: 2px 7px; background: rgba(255,255,255,0.05); border-radius: 3px; color: var(--muted); border: 1px solid var(--border); }
 
+        /* CERTIFICATIONS */
+        .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+        .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: var(--text); }
+        .cert-card:hover { border-color: var(--accent2); background: var(--surface2); transform: translateY(-1px); }
+        .cert-title { font-family: var(--font-display); font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+        .cert-issuer { font-size: 11px; color: var(--muted); }
+        .cert-link { font-size: 12px; color: var(--accent2); font-weight: bold; }
+
         /* FOOTER */
         footer { padding: 40px 0; text-align: center; }
         .footer-name { font-family: var(--font-display); font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
@@ -148,6 +156,7 @@
                 <a href="#stack">Stack</a>
                 <a href="#experience">Experience</a>
                 <a href="#projects">Projects</a>
+                <a href="#certifications">Certifications</a>
             </div>
         </div>
     </nav>
@@ -414,6 +423,67 @@
                         <span>Laravel</span><span>Firebase</span><span>Chart.js</span><span>Twilio</span><span>MySQL</span>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="certifications">
+            <div class="section-label">Licenses & Certifications</div>
+            <div class="certs-grid">
+                <a href="AML-CTFCertificate.pdf" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">AML / CTF Certification</div>
+                        <div class="cert-issuer">Compliance & Finance</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="SQL-certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">SQL Assessment</div>
+                        <div class="cert-issuer">HackerRank</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="SQL-intermediate-certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">SQL (Intermediate)</div>
+                        <div class="cert-issuer">HackerRank</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="SQL-Basic-Certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">SQL (Basic)</div>
+                        <div class="cert-issuer">HackerRank</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="github-certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">GitHub Certification</div>
+                        <div class="cert-issuer">GitHub</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="Excel-certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">Microsoft Excel</div>
+                        <div class="cert-issuer">Microsoft</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
+
+                <a href="Microsoft-offoce-certificate.jpeg" target="_blank" class="cert-card">
+                    <div>
+                        <div class="cert-title">Microsoft Office Suite</div>
+                        <div class="cert-issuer">Microsoft</div>
+                    </div>
+                    <div class="cert-link">↗</div>
+                </a>
             </div>
         </section>
     </main>
